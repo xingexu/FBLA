@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Partners List</title>
+    <!-- or JS here -->
+</head>
+<body>
+    <h1>Partners List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Resources</th>
+                <th>Contact Name</th>
+                <th>Contact Email</th>
+                <th>Contact Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="partner : ${partners}">
+                <td th:text="${partner.name}">Name</td>
+                <td th:text="${partner.type}">Type</td>
+                <td th:text="${partner.resources}">Resources</td>
+                <td th:text="${partner.contactName}">Contact Name</td>
+                <td th:text="${partner.contactEmail}">Contact Email</td>
+                <td th:text="${partner.contactPhone}">Contact Phone</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
