@@ -29,6 +29,11 @@ public class PartnerService {
         partnerRepository.save(partner);
     }
 
+    // Method to delete a partner by their ID
+    public void delete(Long id) {
+        partnerRepository.deleteById(id);
+    }
+
     // Additional methods to handle search and filter
     // (These methods are not present in the code but can be added here)
 }

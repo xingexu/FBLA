@@ -20,6 +20,7 @@ public class Partner {
     private String contactName; // name of contact
     private String contactEmail; // contact 
     private String contactPhone;
+    private String aboutMe;
     
 
     // Standard getters and setters
