@@ -2,45 +2,92 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Add New Partner</title>
-    <!-- Include any CSS or JS here -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #2F4F4F;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            width: 80%;
+            max-width: 800px;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: #00BFFF;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            display: block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #00BFFF;
+            color: white;
+            padding: 14px 20px;
+            margin-top: 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-    <h1>Add New Partner</h1>
-    <form action="#" th:action="@{/addpartner}" th:object="${partner}" method="post">
-        <p>
+    <div class="container">
+        <h1>Add New Partner</h1>
+        <form action="#" th:action="@{/addpartner}" th:object="${partner}" method="post">
             <label for="name">Name:</label>
             <input type="text" id="name" th:field="*{name}" required />
-        </p>
-        <p>
+
             <label for="type">Type:</label>
             <input type="text" id="type" th:field="*{type}" required />
-        </p>
-        <p>
+
             <label for="resources">Resources:</label>
             <textarea id="resources" th:field="*{resources}"></textarea>
-        </p>
-        <p>
+
             <label for="contactName">Contact Name:</label>
             <input type="text" id="contactName" th:field="*{contactName}" required />
-        </p>
-        <p>
+
             <label for="contactEmail">Contact Email:</label>
             <input type="email" id="contactEmail" th:field="*{contactEmail}" required />
-        </p>
-        <p>
+
             <label for="contactPhone">Contact Phone:</label>
             <input type="tel" id="contactPhone" th:field="*{contactPhone}" required />
-        </p>
-        <p>
-            <label for="aboutMe">About Me (optional):</label>
+
+            <label for="aboutMe">Description (optional):</label>
             <input type="text" id="aboutMe(optional)" th:field="*{aboutMe}" required />
-        </p>
-        <p>
+
             <button type="submit">Add Partner</button>
-        </p>
-        <p>
             <button type="button" onclick="location.href='/'">Home Page</button>
-        </p>
-    </form>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
