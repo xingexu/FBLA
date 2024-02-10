@@ -109,9 +109,6 @@
     </style>
 </head>
 <body>
-    <div class="search-container">
-        <input type="text" class="search-bar" placeholder="Search...">
-    </div>
     <h1>Partners List</h1>
     <div class="table-responsive">
         <table class="table">
@@ -119,7 +116,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Type</th>
-                    <th>Resources</th>
+                    <th>Resources</th
                     <th>Contact Name</th>
                     <th>Contact Email</th>
                     <th>Contact Phone</th>
@@ -128,20 +125,20 @@
                 </tr>
             </thead>
             <tbody id="partnerTableBody">
-                <!-- Row 1 -->
-                <tr>
-                    <td>John's Organization</td>
-                    <td>NGO</td>
-                    <td>John's Resources</td>
-                    <td>John Doe</td>
-                    <td>johndoe@gmail.com</td>
-                    <td>416-123-1234</td>
-                    <td>Hello I'm John</td>
+                <tr th:each="partner : ${partners}">
+                    <td th:text="${partner.name}"></td>
+                    <td th:text="${partner.type}"></td>
+                    <td th:text="${partner.resources}"></td>
+                    <td th:text="${partner.contactName}"></td>
+                    <td th:text="${partner.contactEmail}"></td>
+                    <td th:text="${partner.contactPhone}"></td>
+                    <td th:text="${partner.aboutMe}"></td>
                     <td>
-                        <button type="button" class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
+                        <form th:action="@{/deletepartner/{id}(id=${partner.id})}" method="post">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </td>
-                </tr> 
-                <!-- Additional rows can be added here -->
+                </tr>
             </tbody>
         </table>
     </div>
