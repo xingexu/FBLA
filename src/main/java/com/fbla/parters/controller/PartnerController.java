@@ -6,7 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fbla.parters.model.Partner;
 import com.fbla.parters.service.PartnerService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,12 @@ public class PartnerController {
     @PostMapping("/partners/{id}/delete")
     public String deletePartner(@PathVariable Long id) {
         partnerService.delete(id);
+        return "redirect:/partners";
+    }
+    @PostMapping("/savepartner")
+    public String savePartner(Partner partner, RedirectAttributes redirectAttributes) {
+        partnerService.save(partner);
+        redirectAttributes.addFlashAttribute("message", "Partner saved successfully!");
         return "redirect:/partners";
     }
 

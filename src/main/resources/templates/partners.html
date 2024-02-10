@@ -111,12 +111,12 @@
 <body>
     <h1>Partners List</h1>
     <div class="table-responsive">
-        <table class="table">
+        <table class="table" id="partnersTable">
             <thead class="thead-dark">
                 <tr>
                     <th>Name</th>
                     <th>Type</th>
-                    <th>Resources</th
+                    <th>Resources</th>
                     <th>Contact Name</th>
                     <th>Contact Email</th>
                     <th>Contact Phone</th>
@@ -124,7 +124,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="partnerTableBody">
+            <tbody>
                 <tr th:each="partner : ${partners}">
                     <td th:text="${partner.name}"></td>
                     <td th:text="${partner.type}"></td>
@@ -142,32 +142,72 @@
             </tbody>
         </table>
     </div>
-    <button class="add-row-btn" onclick="addRow()">Add Row</button>
+    <button class="add-row-btn" id="addPartnerBtn">Add Partner</button>
     <a href="/" class="home-btn">Home</a>
+
     <script>
-        function deleteRow(button) {
-            if(confirm('Are you sure you want to delete this partner?')) {
-                var row = button.parentNode.parentNode;
-                row.parentNode.removeChild(row);
-            }
-        }
-        function addRow() {
-            var newRow = '<tr>' +
-                '<td><input type="text" value="New Partner" /></td>' +
-                '<td><input type="text" value="Type" /></td>' +
-                '<td><input type="text" value="Resources" /></td>' +
-                '<td><input type="text" value="Contact Name" /></td>' +
-                '<td><input type="text" value="Contact Email" /></td>' +
-                '<td><input type="text" value="Contact Phone" /></td>' +
-                '<td><input type="text" value="Description" /></td>' +
-                '<td>' +
-                '<form action="#" method="post">' +
-                '<button type="submit" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete this partner?\');">Delete</button>' +
-                '</form>' +
-                '</td>' +
-                '</tr>';
-            document.getElementById('partnerTableBody').innerHTML += newRow;
-        }
+        document.getElementById('addPartnerBtn').addEventListener('click', function() {
+            var tableBody = document.getElementById('partnersTable').querySelector('tbody');
+            var newRow = tableBody.insertRow();
+            var html = `
+                <form action="/savepartner" method="post">
+                    <td><input type="text" name="name" /></td>
+                    <td><input type="text" name="type" /></td>
+                    <td><input type="text" name="resources" /></td>
+                    <td><input type="text" name="contactName" /></td>
+                    <td><input type="email" name="contactEmail" /></td>
+                    <td><input type="text" name="contactPhone" /></td>
+                    <td><input type="text" name="aboutMe" /></td>
+                    <td>
+                        <input type="submit" value="Save" class="btn btn-success"/>
+                        <button type="button" class="delete-btn btn btn-danger">Delete</button>
+                    </td>
+                </form>
+            `;
+            newRow.innerHTML = html;
+
+            newRow.querySelector('.save-btn').addEventListener('click', function() {
+                // Collect data from inputs
+                var data = {
+                    name: newRow.querySelector('input[name="name"]').value,
+                    type: newRow.querySelector('input[name="type"]').value,
+                    resources: newRow.querySelector('input[name="resources"]').value,
+                    contactName: newRow.querySelector('input[name="contactName"]').value,
+                    contactEmail: newRow.querySelector('input[name="contactEmail"]').value,
+                    contactPhone: newRow.querySelector('input[name="contactPhone"]').value,
+                    aboutMe: newRow.querySelector('input[name="aboutMe"]').value
+                };
+                // Send data to server using AJAX
+                fetch('/api/savepartner', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Add CSRF token if needed
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                    // If you need to do something after save, like updating the ID of the saved partner
+                    newRow.remove(); // Or update the row to show saved data
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+
+            // Add delete functionality
+            newRow.querySelector('.delete-btn').addEventListener('click', function() {
+                tableBody.removeChild(newRow);
+                // If this row has been saved, you'd also make an AJAX call to delete it from the server
+            });
+        });
     </script>
 </body>
 </html>
