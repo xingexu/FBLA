@@ -20,9 +20,18 @@ public class PartnerController {
     @Autowired
     private PartnerService partnerService;
 
+    private static final String PARTNERS_ATTRIBUTE = "partners";
+
     @GetMapping("/partners")
-    public String listPartners(Model model) {
-        model.addAttribute("partners", partnerService.findAll());
+    public String listPartners(Model model , String keyword) {
+        // model.addAttribute("partners", partnerService.findAll());
+
+        if (keyword != null) {
+            model.addAttribute(PARTNERS_ATTRIBUTE, partnerService.findByKeyword(keyword));
+        } else {
+            model.addAttribute(PARTNERS_ATTRIBUTE, partnerService.findAll());
+        }
+
         return "partners"; // Name of the Thymeleaf template
     }
 

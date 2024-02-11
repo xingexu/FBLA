@@ -1,5 +1,6 @@
 package com.fbla.parters.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,12 +27,19 @@ public class PartnerService {
 
     // Method to save a new partner or update an existing one
     public void save(@NonNull Partner partner) {
+        partner.setCreatedAt(LocalDateTime.now());
+        partner.setUpdatedAt(LocalDateTime.now());
         partnerRepository.save(partner);
     }
 
     // Method to delete a partner by their ID
     public void delete(Long id) {
         partnerRepository.deleteById(id);
+    }
+
+    // Method to find a partners by a keyword
+    public List<Partner> findByKeyword(String keyword) {
+        return partnerRepository.findByKeyword(keyword);
     }
 
     // Additional methods to handle search and filter
