@@ -15,7 +15,8 @@ public class PartnerService {
 
     private final PartnerRepository partnerRepository;
 
-    // Constructor for PartnerService, which takes a PartnerRepository as a parameter
+    // Constructor for PartnerService, which takes a PartnerRepository as a
+    // parameter
     public PartnerService(PartnerRepository partnerRepository) {
         this.partnerRepository = partnerRepository;
     }

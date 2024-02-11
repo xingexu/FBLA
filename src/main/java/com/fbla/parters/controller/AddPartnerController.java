@@ -31,13 +31,12 @@ public class AddPartnerController {
         redirectAttributes.addFlashAttribute("message", "Partner added successfully!");
         return "redirect:/partners"; // Redirect to the list of partners
     }
+
     @PostMapping("/deletepartner/{id}")
-    public String deletePartner(@PathVariable Long id, RedirectAttributes redirectAttributes) { 
+    public String deletePartner(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         partnerService.delete(id);
         redirectAttributes.addFlashAttribute("message", "Partner deleted successfully!");
         return "redirect:/partners"; // Redirect back to the list of partners
     }
 
-
 }
-

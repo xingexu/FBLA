@@ -23,7 +23,7 @@ public class PartnerController {
     private static final String PARTNERS_ATTRIBUTE = "partners";
 
     @GetMapping("/partners")
-    public String listPartners(Model model , String keyword) {
+    public String listPartners(Model model, String keyword) {
         // model.addAttribute("partners", partnerService.findAll());
 
         if (keyword != null) {
@@ -41,6 +41,7 @@ public class PartnerController {
         partnerService.delete(id);
         return "redirect:/partners";
     }
+
     @PostMapping("/savepartner")
     public String savePartner(Partner partner, RedirectAttributes redirectAttributes) {
         partnerService.save(partner);

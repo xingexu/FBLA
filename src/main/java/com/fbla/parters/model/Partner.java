@@ -1,7 +1,5 @@
 package com.fbla.parters.model;
 
-
-
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -20,12 +18,11 @@ public class Partner {
     private String type; // e.g., NGO, Corporation, etc.
     private String resources; // Description of resources available
     private String contactName; // name of contact
-    private String contactEmail; // contact 
+    private String contactEmail; // contact
     private String contactPhone;
     private String aboutMe;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    
 
     // Standard getters and setters
 }
