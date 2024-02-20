@@ -56,6 +56,14 @@ public class PartnerService {
         return partnerRepository.findByTagsIn(tags);
     }
 
+    public List<Partner> filterItemsByTagsAndKeyword(Set<Tag> tags, String keyword) {
+        return partnerRepository.findByTagsIn(tags).stream()
+                .filter(partner -> partner.getOrganizationName().contains(keyword)
+                        || partner.getType().contains(keyword) || partner.getContactEmail().contains(keyword)
+                        || partner.getDescription().contains(keyword))
+                .toList();
+    }
+
     public List<Tag> findAllTags() {
         return tagRepository.findAll();
     }

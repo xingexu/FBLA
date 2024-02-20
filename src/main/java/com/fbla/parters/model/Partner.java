@@ -1,12 +1,17 @@
 package com.fbla.parters.model;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
 
@@ -24,8 +29,14 @@ public class Partner {
     private String contactUrl;
     private String description;
 
-    @ManyToMany
-    private Set<Tag> tags;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "partner_tag",
+        joinColumns = @JoinColumn(name = "partner_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Set<Tag> tags = new HashSet<>();
+
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

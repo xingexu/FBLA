@@ -14,8 +14,9 @@ import com.fbla.parters.model.Tag;
 @Repository
 public interface PartnerRepository extends JpaRepository<Partner, Long> {
 
-    @Query(value = "SELECT * FROM Partner p WHERE p.name LIKE %:keyword% OR p.type LIKE %:keyword% OR p.resources LIKE %:keyword%", nativeQuery = true)
+    @Query(value = "SELECT * FROM Partner p WHERE LOWER(p.organizationName) LIKE LOWER(%:keyword%) OR LOWER(p.type) LIKE LOWER( %:keyword%)  OR LOWER( p.description)  LIKE LOWER( %:keyword%)  OR LOWER( p.contactEmail) LIKE LOWER( %:keyword%) OR p.contactPhone LIKE %:keyword%", nativeQuery = true)
     List<Partner> findByKeyword(@Param("keyword") String keyword);
 
     List<Partner> findByTagsIn(Set<Tag> tags);
+
 }

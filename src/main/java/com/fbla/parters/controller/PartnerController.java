@@ -2,10 +2,13 @@ package com.fbla.parters.controller;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.flywaydb.core.internal.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,23 +35,45 @@ public class PartnerController {
 
     @GetMapping("/partners")
     public String listPartners(@ModelAttribute("filter") FilterDTO filter, Model model, String keyword) {
-        // model.addAttribute("partners", partnerService.findAll());
 
-        if (filter != null && filter.getTagIds() != null) {
-            Set<Tag> selectedTags = partnerService.findByTagIds(filter.getTagIds());
-            List<Partner> partners = partnerService.filterItemsByTags(selectedTags);
-            model.addAttribute(PARTNERS_ATTRIBUTE, partners);
-        }
-
+        var filterDto = new FilterDTO();
         List<Tag> allTags = partnerService.findAllTags();
 
-        if (keyword != null) {
-            model.addAttribute(PARTNERS_ATTRIBUTE, partnerService.findByKeyword(keyword));
+        if (StringUtils.hasText(keyword)) {
+
+            if (filter != null && !CollectionUtils.isEmpty(filter.getTagIds())) {
+                filterDto.setTagIds(filter.getTagIds());
+                Set<Tag> selectedTags = partnerService.findByTagIds(filter.getTagIds());
+                List<Partner> partners = partnerService.filterItemsByTagsAndKeyword(selectedTags, keyword);
+                model.addAttribute(PARTNERS_ATTRIBUTE, partners);
+            } else {
+                model.addAttribute(PARTNERS_ATTRIBUTE, partnerService.findByKeyword(keyword));
+                filterDto.setTagIds(allTags.stream().map(tag -> tag.getId()).collect(Collectors.toSet()));
+            }
+
         } else {
-            model.addAttribute(PARTNERS_ATTRIBUTE, partnerService.findAll());
+
+            if (filter != null && !CollectionUtils.isEmpty(filter.getTagIds())) {
+                filterDto.setTagIds(filter.getTagIds());
+                Set<Tag> selectedTags = partnerService.findByTagIds(filter.getTagIds());
+                List<Partner> partners = partnerService.filterItemsByTags(selectedTags);
+                model.addAttribute(PARTNERS_ATTRIBUTE, partners);
+            } else {
+
+                model.addAttribute(PARTNERS_ATTRIBUTE, partnerService.findAll());
+                filterDto.setTagIds(allTags.stream().map(tag -> tag.getId()).collect(Collectors.toSet()));
+            }
         }
 
-        model.addAttribute(FILTER_ATTRIBUTE, new FilterDTO());
+        // if (filter != null && !CollectionUtils.isEmpty(filter.getTagIds())) {
+        // Set<Tag> selectedTags = partnerService.findByTagIds(filter.getTagIds());
+        // List<Partner> partners = partnerService.filterItemsByTags(selectedTags);
+        // model.addAttribute(PARTNERS_ATTRIBUTE, partners);
+        // }
+
+        
+
+        model.addAttribute(FILTER_ATTRIBUTE, filterDto);
 
         model.addAttribute(TAGS_ATTRIBUTE, allTags);
 
