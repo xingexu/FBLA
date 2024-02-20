@@ -1,0 +1,1 @@
+INSERT INTO tag (name ) VALUES ('Food/Health'), ('Shop'), ('Club'),('Environment'),('Tech'), ('Donation'),('Game'),('Tutor'),('Internship');

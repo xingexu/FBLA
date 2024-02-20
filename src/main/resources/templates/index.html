@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
 
 <head>
     <title>Welcome to CTE Partners Program</title>
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,700&display=swap"
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
     <style>
         body {
-            font-family: 'Open Sans', sans-serif;
-            color: #2F4F4F;
+            font-family: "Open Sans", sans-serif;
+            color: #2f4f4f;
             background-color: #f8f9fa;
             padding-top: 20px;
             padding-bottom: 20px;
@@ -28,8 +29,8 @@
         }
 
         h1 {
-            font-family: 'Montserrat', sans-serif;
-            color: #00BFFF;
+            font-family: "Montserrat", sans-serif;
+            color: #00bfff;
             margin-bottom: 10px;
         }
 
@@ -49,7 +50,7 @@
         .outer-box {
             background-color: white;
             padding: 10px;
-            border: 1px solid #00BFFF;
+            border: 1px solid #00bfff;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin: 5px;
@@ -82,7 +83,7 @@
         }
 
         button {
-            background-color: #00BFFF;
+            background-color: #00bfff;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -98,30 +99,37 @@
 </head>
 
 <body>
-    <div class="welcome-container">
-        <h1>Welcome to the Career and Technical Education Partners Program</h1>
-        <p>This platform allows you to manage and view information about our business and community partners.</p>
-    </div>
-    <div class="actions-container">
-        <div class="outer-box">
-            <div class="action-box">
-                <button type="button" onclick="window.location.href='/partners'">View Partners</button>
+    <div layout:fragment="content">
+        <div class="welcome-container">
+            <h1>Welcome to the Career and Technical Education Partners Program</h1>
+            <p>
+                This platform allows you to manage and view information about our
+                business and community partners.
+            </p>
+        </div>
+        <div class="actions-container">
+            <div class="outer-box">
+                <div class="action-box">
+                    <button type="button" onclick="window.location.href='/partners'">
+                        View Partners
+                    </button>
+                </div>
+                <div class="image-container">
+                    <img src="/viewpartners.png" alt="View Partners Image" />
+                </div>
             </div>
-            <div class="image-container">
-                <img src="/viewpartners.png" alt="View Partners Image">
+            <div class="outer-box">
+                <div class="action-box">
+                    <button type="button" onclick="window.location.href='/addpartner'">
+                        Become A Partner
+                    </button>
+                </div>
+                <div class="image-container">
+                    <img src="/addpartner.png" alt="Add New Partner Image" />
+                </div>
             </div>
         </div>
-        <div class="outer-box">
-            <div class="action-box">
-                <button type="button" onclick="window.location.href='/addpartner'">Become A Partner</button>
-            </div>
-            <div class="image-container">
-                <img src="/addpartner.png" alt="Add New Partner Image">
-            </div>
-        </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

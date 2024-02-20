@@ -3,17 +3,26 @@
 -- Create the partner table
 -- For PostgreSQL database
 CREATE TABLE partner (
-  id BIGSERIAL NOT NULL,
-  name VARCHAR(255) NOT NULL,
+  id BIGSERIAL PRIMARY KEY,
+  organization_name VARCHAR(255) NOT NULL UNIQUE,
   type VARCHAR(255) NOT NULL,
-  resources VARCHAR(255) NOT NULL,
-  contact_name VARCHAR(255) NOT NULL,
-  contact_email VARCHAR(255) NOT NULL,
+  
+  contact_email VARCHAR(255) NOT NULL UNIQUE,
   contact_phone VARCHAR(255) NOT NULL,
-  about_me VARCHAR(255) NULL,
+  contact_url VARCHAR(255) NOT NULL,
+  description TEXT NULL,
   created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-  updated_at TIMESTAMP WITHOUT TIME ZONE NULL,
-  CONSTRAINT partner_pk PRIMARY KEY (id),
-  CONSTRAINT contact_name_unq UNIQUE (contact_name),
-  CONSTRAINT partner_email_unq UNIQUE (contact_email)
+  updated_at TIMESTAMP WITHOUT TIME ZONE NULL
 );
+
+
+CREATE TABLE tag (
+  id BIGSERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE partner_tag (
+  partner_id bigint REFERENCES partner(id),
+  tag_id bigint REFERENCES tag(id),
+  PRIMARY KEY (partner_id, tag_id)
+)

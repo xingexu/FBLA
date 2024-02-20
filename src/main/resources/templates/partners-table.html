@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Partners List</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: #2F4F4F;
+            margin: 0;
+            /* Remove default margin */
+            padding: 0;
+            /* Remove default padding */
+            overflow-x: hidden;
+            /* Hide horizontal overflow */
+        }
+
+        .search-container {
+            position: absolute;
+            /* Position the container absolutely */
+            top: 0;
+            /* Align to the top of the page */
+            left: 0;
+            /* Align to the left of the page */
+            width: 30%;
+            /* Occupy full width */
+            height: 40px;
+            /* Set the height */
+            background-color: #f8f9fa;
+            /* Set background color */
+            z-index: 1;
+            /* Ensure it's above other elements */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Add shadow */
+            margin-top: 20px;
+        }
+
+        .search-bar {
+            width: calc(100% - 80px);
+            /* Adjust width for search button */
+            height: 100%;
+            /* Occupy full height */
+            border: none;
+            /* Remove border */
+            padding: 10px;
+            /* Add padding */
+            box-sizing: border-box;
+            /* Include padding in width calculation */
+            font-size: 14px;
+            color: #555;
+            float: left;
+            /* Float left for inline display */
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: #00BFFF;
+            text-align: center;
+            border: 2px solid #00BFFF;
+            padding: 10px;
+            width: fit-content;
+            margin: 0 auto;
+            margin-top: 50px;
+            /* Adjust top margin */
+            margin-bottom: 20px;
+        }
+
+        .table {
+            border-collapse: separate;
+            border-spacing: 0 0.5em;
+        }
+
+        .table thead {
+            background-color: #00BFFF;
+            color: white;
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        .btn-danger {
+            background-color: #ff6347;
+            border-color: #ff6347;
+        }
+
+        .btn-danger:hover {
+            background-color: #ff5147;
+            border-color: #ff5147;
+        }
+
+        input[type="text"] {
+
+            padding: 10px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .add-row-btn {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .add-row-btn:hover {
+            background-color: #45a049;
+        }
+
+        .home-btn {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .home-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div layout:fragment="partners">
+        <section id="container" class="col-lg-12">
+            <header class="pannel-heading">
+                <h1>Partners List</h1>
+            </header>
+
+            <!-- <a href="/" class="home-btn">Home</a> -->
+            <!-- <button class="add-row-btn" id="addPartnerBtn">Add Partner</button> -->
+
+            <form th:action="@{/partners}" method="get">
+                <div class="search-partners row">
+                    <input type="text" id="textSearch" name="keyword" placeholder="Search partners...">
+                    <button type="submit" class="search-btn">Search</button>
+                </div>
+            </form>
+
+            <div>
+                <form action="#" th:action="@{/partners}" th:object="${filter}" method="get">
+                    <select multiple="multiple" th:field="*{tagIds}">
+                        <option th:each="tag : ${allTags}" th:value="${tag.id}" th:text="${tag.name}">Tag Name</option>
+                    </select>
+                    <button type="submit">Filter</button>
+                </form>
+            </div>
+
+        </section>
+        <!-- <h1>Partners List</h1> -->
+        <div class="table-responsive">
+            <form action="#" th:action="@{/addpartner}" th:object="${partner}" method="post">
+                <table class="table table-striped table-hover" id="partnersTable">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Resources</th>
+                            <th>Contact Name</th>
+                            <th>Contact Email</th>
+                            <th>Contact Phone</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="partner : ${partners}">
+                            <td th:text="${partner.name}"></td>
+                            <td th:text="${partner.type}"></td>
+                            <td th:text="${partner.resources}"></td>
+                            <td th:text="${partner.contactName}"></td>
+                            <td th:text="${partner.contactEmail}"></td>
+                            <td th:text="${partner.contactPhone}"></td>
+                            <td th:text="${partner.aboutMe}"></td>
+                            <td>
+                                <form th:action="@{/deletepartner/{id}(id=${partner.id})}" method="post">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <button class="add-row-btn" id="addPartnerBtn">Add Partner</button>
+        <a href="/" class="home-btn">Home</a>
+
+        <script>
+            document.getElementById('addPartnerBtn').addEventListener('click', function () {
+                var tableBody = document.getElementById('partnersTable').querySelector('tbody');
+                var newRow = tableBody.insertRow();
+                var html = `
+                
+                    <td><input type="text" name="name" /></td>
+                    <td><input type="text" name="type" /></td>
+                    <td><input type="text" name="resources" /></td>
+                    <td><input type="text" name="contactName" /></td>
+                    <td><input type="email" name="contactEmail" /></td>
+                    <td><input type="text" name="contactPhone" /></td>
+                    <td><input type="text" name="aboutMe" /></td>
+                    <td>
+                        <input type="submit" value="Save"  class="btn btn-success"/></input>
+                        <button type="button" class="delete-btn btn btn-danger">Delete</button>
+                    </td>
+                
+            `;
+                newRow.innerHTML = html;
+
+                // Add delete functionality
+                newRow.querySelector('.delete-btn').addEventListener('click', function () {
+                    tableBody.removeChild(newRow);
+                    // If this row has been saved, you'd also make an AJAX call to delete it from the server
+                });
+            });
+        </script>
+    </div>
+</body>
+
+</html>
