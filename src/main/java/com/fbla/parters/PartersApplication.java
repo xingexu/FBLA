@@ -9,4 +9,4 @@ public class PartersApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PartersApplication.class, args);
 	}
-}
+} 

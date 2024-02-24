@@ -6,3 +6,4 @@ import com.fbla.parters.model.Tag;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {
 }
+

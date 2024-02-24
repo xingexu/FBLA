@@ -9,7 +9,8 @@ CREATE TABLE partner (
   
   contact_email VARCHAR(255) NOT NULL UNIQUE,
   contact_phone VARCHAR(255) NOT NULL,
-  contact_url VARCHAR(255) NOT NULL,
+  contact_url VARCHAR(255) NULL,
+  logo_path VARCHAR(255) NULL,
   description TEXT NULL,
   created_at TIMESTAMP WITHOUT TIME ZONE NOT NULL,
   updated_at TIMESTAMP WITHOUT TIME ZONE NULL

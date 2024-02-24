@@ -27,6 +27,7 @@ public class Partner {
     private String contactEmail; // contact
     private String contactPhone;
     private String contactUrl;
+    private String logoPath;
     private String description;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
