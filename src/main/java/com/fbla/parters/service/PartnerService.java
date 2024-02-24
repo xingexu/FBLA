@@ -43,8 +43,19 @@ public class PartnerService {
     }
 
     // Method to delete a partner by their ID
-    public void delete(Long id) {
-        partnerRepository.deleteById(id);
+    public void delete(Long partnerId) {
+
+        // Check for related records in partner_tag
+        long relatedRecords = partnerRepository.countByPartnerId(partnerId);
+
+        if (relatedRecords == 0) {
+            // No related records, safe to delete
+            partnerRepository.deleteById(partnerId);
+        } else {
+            // Delete related records first
+            partnerRepository.deleteByPartnerId(partnerId);
+            partnerRepository.deleteById(partnerId);
+        }
     }
 
     // Method to find a partners by a keyword

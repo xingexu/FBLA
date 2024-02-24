@@ -41,7 +41,7 @@
             </div>
             <div class="navbar navbar-dark bg-dark shadow-sm">
                 <div class="container">
-                    <a href="/partners" class="navbar-brand d-flex align-items-center">
+                    <a href="/" class="navbar-brand d-flex align-items-center">
                         <i class="bi bi-people-fill pe-1" style="font-size: 2rem; "></i>
                         <strong>Partners</strong>
                     </a>
@@ -57,11 +57,22 @@
         <!-- form actions -->
         <section id="container" class="col-lg-12">
             <form id="search-form" class="row g-1 mt-1" th:action="@{/partners}" th:object="${filter}" method="get">
-                <div class="input-group mb-3">
-                    <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control" id="textSearch" name="keyword"
-                        th:onblur="'autoSubmitForm()'" placeholder="Search partners..." aria-label="search">
-                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control" id="textSearch" name="keyword"
+                                th:onblur="'autoSubmitForm()'" placeholder="Search partners..." aria-label="search">
+                        </div>
+                      
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary d-flex flex-end justify-content-end" onclick="window.location.href='/addpartner'">Added New</button>
+                    </div>
+                  </div>
+
+               
                 <div>
                     <label>Tags:</label>
                     <div class="form-check form-check-inline" th:each="tag : ${allTags}" name="'tag-'+ ${tag.name}">
@@ -89,7 +100,7 @@
                                         style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
                                         disabled th:each="tag : ${partner.tags}" th:text="${tag.name}"></button>
                                     <p class="card-text" th:text="${partner.type}"></p>
-                                    
+
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <a th:if="${not #lists.isEmpty(partner.contactUrl)}"
@@ -110,11 +121,26 @@
                                                 <i class="bi bi-telephone-outbound"></i>
                                             </a>
                                         </div>
+
                                         <div sec:authorize="hasRole('ROLE_ADMIN')">
                                             <button type="button" class="btn btn-sm btn-outline-secondary"
-                                                data-bs-toggle="modal" data-bs-target="#addPartner"
+                                                data-bs-toggle="modal" data-bs-target="#editModal"
+                                                th:data-partner-id="${partner.id}"
+                                                th:data-partner-name="${partner.organizationName}"
+                                                th:data-partner-type="${partner.type}"
+                                                th:data-partner-email="${partner.contactEmail}"
+                                                th:data-partner-phone="${partner.contactPhone}"
+                                                th:data-partner-url="${partner.contactUrl}"
+                                                th:data-partner-logo="${partner.logoPath}"
+                                                th:data-partner-desc="${partner.description}"
                                                 th:data-partner="${partner}"><i
                                                     class="bi bi-pencil-square"></i></button>
+
+                                            <button type="button" class="btn btn-sm btn-outline-secondary"
+                                                data-bs-toggle="modal" data-bs-target="#confirmModal" aria-label="Close"
+                                                th:data-partner-id="${partner.id}"
+                                                th:data-partner-name="${partner.organizationName}"><i
+                                                    class="bi bi-x-square"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -125,36 +151,163 @@
             </div>
         </main>
         <!-- Modal -->
-        <div class="modal fade" id="addPartner" tabindex="-1" aria-labelledby="addPartner" aria-hidden="true">
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
+                    <form action="/savepartner" method="post" class="needs-validation was-validated">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="addPartnerLabel">Edit Partner</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <input type="hidden" id="partner-id" name="id" />
+                            <input type="hidden" id="logoPath" name="logoPath" />
+                            <div class="mb-3">
+                                <label for="organizationName" class="form-label">Organization Name:</label>
+                                <input type="text" class="form-control" id="organizationName" name="organizationName"
+                                    required />
+
+                                <div class="invalid-feedback">
+                                    Please input an Organization Name.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="type" class="form-label">Type:</label>
+                                <input type="text" class="form-control" id="type" name="type" required />
+
+                                <div class="invalid-feedback">
+                                    Please input an Organization Type.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="contactEmail" class="form-label">Contact Email:</label>
+                                <input type="email" class="form-control" id="contactEmail" name="contactEmail"
+                                    required />
+                                <div class="invalid-feedback">
+                                    Please input valid email address.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="contactPhone" class="form-label">Contact Phone:</label>
+                                <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control"
+                                    id="contactPhone" name="contactPhone" required />
+                                <div class="invalid-feedback">
+                                    Please input valid telephone number <small>Format: 123-456-7890</small>.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="contactUrl" class="form-label">Contact URL:</label>
+                                <input type="url" placeholder="https://example.com"
+                                    pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"
+                                    size="30" class="form-control" id="contactUrl" name="contactUrl" />
+                                <div class="invalid-feedback">
+                                    Please input valid websit URL.
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description(optional)" class="form-label">Description
+                                    (optional):</label>
+                                <input type="textarea" class="form-control" id="description" name="description" />
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck"
+                                        required="">
+                                    <label class="form-check-label" for="invalidCheck">
+                                        Agree to terms and conditions
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        You must agree before submitting.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="addPartnerLabel">Add Partner</h1>
+                        <h5 class="modal-title" id="confirmModalLabel">Confirm Action</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-
-                        <div th:if="${partner}">
-                            <div th:text="${partner.type}" />
-                            <div th:text="${partner.organizationName}" />
-                        </div>
-
-
-                        <!-- <form action="#" th:action="@{/deletepartner/{id}(id=${partner.id})}" th:object="${partner}" method="delete">
-                            <input type="text" hidden="true" th:field="${row.id}">
-                        </form> -->
+                        Are you sure you want to delete this partner?
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <form id="deleteForm" action="" method="post">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
         <script th:inline="javascript">
             function autoSubmitForm() {
                 document.getElementById('search-form').submit();
             }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var confirmModal = document.getElementById('confirmModal');
+                confirmModal.addEventListener('show.bs.modal', function (event) {
+                    var button = event.relatedTarget;
+
+                    var partner = button.getAttribute('data-partner');
+                    var partnerId = button.getAttribute('data-partner-id');
+                    var partnerName = button.getAttribute('data-partner-name');
+
+                    // Update modal's content.
+                    var modalTitle = confirmModal.querySelector('.modal-title');
+                    modalTitle.textContent = 'Delete Partner: ' + partnerName;
+
+                    var form = document.getElementById('deleteForm');
+                    form.action = '/deletepartner/' + partnerId;
+                });
+
+                var editModal = document.getElementById('editModal');
+                editModal.addEventListener('show.bs.modal', function (event) {
+                    var button = event.relatedTarget;
+
+                    var partner = button.getAttribute('data-partner');
+                    var partnerId = button.getAttribute('data-partner-id');
+                    var name = button.getAttribute('data-partner-name');
+                    var type = button.getAttribute('data-partner-type');
+                    var email = button.getAttribute('data-partner-email');
+                    var phone = button.getAttribute('data-partner-phone');
+                    var url = button.getAttribute('data-partner-url');
+                    var logo = button.getAttribute('data-partner-logo');
+                    var desc = button.getAttribute('data-partner-desc');
+
+                    document.getElementById('partner-id').value = partnerId;
+                    document.getElementById('organizationName').value = name;
+                    document.getElementById('type').value = type;
+                    document.getElementById('contactEmail').value = email;
+                    document.getElementById('contactPhone').value = phone;
+                    document.getElementById('contactUrl').value = url;
+                    document.getElementById('description').value = desc;
+                    document.getElementById('logoPath').value = logo;
+                });
+
+            });
         </script>
     </div>
 

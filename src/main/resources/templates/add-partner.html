@@ -4,9 +4,7 @@
 
 <head>
     <title>Add New Partner</title>
-    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
@@ -69,35 +67,98 @@
 </head>
 
 <body>
+
+    <nav id="navbar" class="navbar bg-body-tertiary px-3 mb-3">
+        <a class="navbar-brand" href="#">Partners</a>
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/partners">Partners</a>
+          </li>
+          
+        </ul>
+      </nav>
+
     <div layout:fragment="add-partners">
         <div class="container">
             <h1>Add New Partner</h1>
-            <form action="#" th:action="@{/addpartner}" th:object="${partner}" method="post">
-                <label for="name">Name:</label>
-                <input type="text" id="name" th:field="*{name}" required />
+            <form action="#" th:action="@{/addpartner}" th:object="${partner}" method="post"
+                class="needs-validation was-validated">
 
-                <label for="type">Type:</label>
-                <input type="text" id="type" th:field="*{type}" required />
+                <div class="mb-3">
+                    <label for="organizationName" class="form-label">Organization Name:</label>
+                    <input type="text" class="form-control" id="organizationName" name="organizationName"
+                        th:field="*{organizationName}" required />
 
-                <label for="resources">Resources:</label>
-                <textarea id="resources" th:field="*{resources}"></textarea>
+                    <div class="invalid-feedback">
+                        Please input an Organization Name.
+                    </div>
+                </div>
 
-                <label for="contactName">Contact Name:</label>
-                <input type="text" id="contactName" th:field="*{contactName}" required />
+                <div class="mb-3">
+                    <label for="type" class="form-label">Type:</label>
+                    <input type="text" class="form-control" id="type" name="type" th:field="*{type}" required />
 
-                <label for="contactEmail">Contact Email:</label>
-                <input type="email" id="contactEmail" th:field="*{contactEmail}" required />
+                    <div class="invalid-feedback">
+                        Please input an Organization Type.
+                    </div>
+                </div>
 
-                <label for="contactPhone">Contact Phone:</label>
-                <input type="tel" id="contactPhone" th:field="*{contactPhone}" required />
+                <div class="mb-3">
+                    <label for="contactEmail" class="form-label">Contact Email:</label>
+                    <input type="email" class="form-control" id="contactEmail" name="contactEmail"
+                        th:field="*{contactEmail}" required />
+                    <div class="invalid-feedback">
+                        Please input valid email address.
+                    </div>
+                </div>
 
-                <label for="aboutMe(optional)">Description (optional):</label>
-                <input type="text" id="aboutMe(optional)" th:field="*{aboutMe}" required />
+                <div class="mb-3">
+                    <label for="contactPhone" class="form-label">Contact Phone:</label>
+                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control"
+                        th:field="*{contactPhone}" id="contactPhone" name="contactPhone" required />
+                    <div class="invalid-feedback">
+                        Please input valid telephone number <small>Format: 123-456-7890</small>.
+                    </div>
+                </div>
 
-                <button type="submit">Add Partner</button>
-                <button type="button" onclick="window.location.href='/'">Home Page</button>
-            </form>
+                <div class="mb-3">
+                    <label for="contactUrl" class="form-label">Contact URL:</label>
+                    <input type="url" placeholder="https://example.com"
+                        pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"
+                        size="30" class="form-control" id="contactUrl" name="contactUrl" th:field="*{contactUrl}" />
+                    <div class="invalid-feedback">
+                        Please input valid websit URL.
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description(optional)" class="form-label">Description
+                        (optional):</label>
+                    <input type="textarea" class="form-control" id="description" name="description"
+                        th:field="*{description}" />
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required="">
+                        <label class="form-check-label" for="invalidCheck">
+                            Agree to terms and conditions
+                        </label>
+                        <div class="invalid-feedback">
+                            You must agree before submitting.
+                        </div>
+                    </div>
+                </div>
+
         </div>
+
+        <button type="submit" class="btn btn-primary" >Add Partner</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/'">Home Page</button>
+        </form>
+    </div>
     </div>
 </body>
 
