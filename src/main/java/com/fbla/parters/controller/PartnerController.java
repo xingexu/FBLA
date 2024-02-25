@@ -64,19 +64,9 @@ public class PartnerController {
                 filterDto.setTagIds(allTags.stream().map(tag -> tag.getId()).collect(Collectors.toSet()));
             }
         }
-
-        // if (filter != null && !CollectionUtils.isEmpty(filter.getTagIds())) {
-        // Set<Tag> selectedTags = partnerService.findByTagIds(filter.getTagIds());
-        // List<Partner> partners = partnerService.filterItemsByTags(selectedTags);
-        // model.addAttribute(PARTNERS_ATTRIBUTE, partners);
-        // }
-
-        
-
+ 
         model.addAttribute(FILTER_ATTRIBUTE, filterDto);
-
         model.addAttribute(TAGS_ATTRIBUTE, allTags);
-
         return "partners"; // Name of the Thymeleaf template
     }
 

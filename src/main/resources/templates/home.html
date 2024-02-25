@@ -83,23 +83,24 @@
         }
 
         button {
-            background-color: #00bfff;
+            /* background-color: #00bfff; */
             color: white;
             padding: 10px 15px;
             border: none;
-            cursor: pointer;
+            
             border-radius: 4px;
             width: 100%;
         }
 
         button:hover {
             opacity: 0.8;
+            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
-    <div layout:fragment="content">
+    <div layout:fragment="home">
         <div class="welcome-container">
             <h1>Welcome to the Career and Technical Education Partners Program</h1>
             <p>
@@ -110,22 +111,22 @@
         <div class="actions-container">
             <div class="outer-box">
                 <div class="action-box">
-                    <button type="button" onclick="window.location.href='/partners'">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='/partners'">
                         View Partners
                     </button>
                 </div>
                 <div class="image-container">
-                    <img src="/viewpartners.png" alt="View Partners Image" />
+                    <img src="/images/viewpartners.png" alt="View Partners Image" />
                 </div>
             </div>
             <div class="outer-box">
                 <div class="action-box">
-                    <button type="button" onclick="window.location.href='/addpartner'">
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='/addpartner'">
                         Become A Partner
                     </button>
                 </div>
                 <div class="image-container">
-                    <img src="/addpartner.png" alt="Add New Partner Image" />
+                    <img src="/images/addpartner.png" alt="Add New Partner Image" />
                 </div>
             </div>
         </div>
