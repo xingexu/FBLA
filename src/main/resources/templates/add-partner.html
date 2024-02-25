@@ -63,6 +63,10 @@
         button:hover {
             opacity: 0.8;
         }
+
+        .error {
+            color: red;
+        }
     </style>
 </head>
 
@@ -95,6 +99,9 @@
                     <div class="invalid-feedback">
                         Please input an Organization Name.
                     </div>
+                    <ul>
+                        <li th:each="err: ${#fields.errors('organizationName')}" th:text="${err}" class="error"></li>
+                    </ul>
                 </div>
 
                 <div class="mb-3">
@@ -113,6 +120,7 @@
                     <div class="invalid-feedback">
                         Please input valid email address.
                     </div>
+                    <p th:if="${#fields.hasErrors('contactEmail')}" th:errorclass="err" th:errors="*{contactEmail}"></p>
                 </div>
 
                 <div class="mb-3">
@@ -122,6 +130,7 @@
                     <div class="invalid-feedback">
                         Please input valid telephone number <small>Format: 123-456-7890</small>.
                     </div>
+                    <p th:if="${#fields.hasErrors('contactPhone')}" th:errorclass="err" th:errors="*{contactPhone}"></p>
                 </div>
 
                 <div class="mb-3">
