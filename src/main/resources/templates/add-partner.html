@@ -1,157 +1,136 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout}">
-
+<html>
 <head>
     <title>Add New Partner</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins', sans-serif;
             color: #ffffff;
-            background: linear-gradient(to right, #654ea3, #eaafc8);
-            padding-top: 20px;
+            background: linear-gradient(135deg, #0d324d 0%, #7f5a83 100%); /* Darker gradient */
+            padding: 20px;
             margin: 0;
+            text-align: center;
         }
 
         .container {
+            font-family: 'Poppins', sans-serif;
             background-color: rgba(255, 255, 255, 0.1);
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             margin: 0 auto;
             width: 80%;
-            max-width: 800px;
+            max-width: 600px;
         }
 
         h1 {
-            font-family: 'Roboto', sans-serif;
-            color: #e43f5a;
-            text-align: center;
             margin-bottom: 20px;
+            color: #ec008c; /* Matching the heading color */
         }
 
-        label {
-            font-weight: bold;
-            color: #ffffff; /* Ensure all text is visible */
-            display: block;
-            margin-top: 10px;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="url"],
-        textarea {
-            width: calc(100% - 20px);
+        input, textarea {
+            font-family: 'Poppins', sans-serif;
+            width: calc(100% - 20px); /* Prevent overflow */
             padding: 10px;
             margin-top: 5px;
-            display: block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.2); /* Slight transparency */
-            color: #ffffff;
+            border: 1px solid #ec008c; /* Subtle border */
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1); /* Darker input background */
+            color: white; /* White text for visibility */
         }
 
-        button {
-            background-color: #e43f5a;
-            color: white;
-            padding: 14px 20px;
+        input::placeholder, textarea::placeholder {
+            color: #ffffff; /* White placeholder text */
+        }
+
+        .terms {
+            font-family: 'Poppins', sans-serif;
+            overflow: auto;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1); /* Darker terms box */
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+            text-align: left;
+            color: #FFF; /* White text for visibility */
+        }
+
+        .button {
+            background-color: #ec008c; /* Matching button color */
+            color: #ffffff; /* White text color */
+            font-family: 'Poppins', sans-serif;
+            padding: 12px;
             margin-top: 20px;
             border: none;
-            cursor: pointer;
             width: 100%;
-            border-radius: 4px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
         }
 
-        button:hover {
-            background-color: #f73859;
-            opacity: 0.9;
+        .button:hover {
+            background-color: #ff3366; /* Darker shade on hover */
         }
 
-        .error, .invalid-feedback {
-            color: #ff3366; /* Error messages in a consistent color */
-        }
-
-        .form-check-label {
-            color: #ffffff; /* Make sure all labels are visible */
-        }
-
-        .form-check-input {
-            margin-right: 10px;
+        .checkbox {
+            margin-top: 10px;
+            text-align: left;
+            font-size: 14px;
         }
     </style>
 </head>
-
 <body>
-    <nav id="navbar" class="navbar bg-body-tertiary px-3 mb-3">
-        <a class="navbar-brand" href="#">Partners</a>
-        <ul class="nav nav-pills">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/partners">Partners</a>
-          </li>
-        </ul>
-    </nav>
+    <div class="container">
+        <h1>Add New Partner</h1>
+        <form action="#" method="post">
+            <label for="organizationName">Organization Name:</label>
+            <input type="text" id="organizationName" name="organizationName" required placeholder="Enter organization name">
 
-    <div layout:fragment="add-partners">
-        <div class="container">
-            <h1>Add New Partner</h1>
-            <form action="#" th:action="@{/addpartner}" th:object="${partner}" method="post"
-                class="needs-validation was-validated">
+            <label for="type">Type:</label>
+            <input type="text" id="type" name="type" required placeholder="Type of organization">
 
-                <div class="mb-3">
-                    <label for="organizationName">Organization Name:</label>
-                    <input type="text" id="organizationName" name="organizationName" th:field="*{organizationName}" required />
-                    <div class="invalid-feedback">
-                        Please input an Organization Name.
-                    </div>
-                </div>
+            <label for="contactEmail">Contact Email:</label>
+            <input type="email" id="contactEmail" name="contactEmail" required placeholder="Email address">
 
-                <div class="mb-3">
-                    <label for="type">Type:</label>
-                    <input type="text" id="type" name="type" th:field="*{type}" required />
-                </div>
+            <label for="contactPhone">Contact Phone:</label>
+            <input type="tel" id="contactPhone" name="contactPhone" placeholder="123-456-7890">
 
-                <div class="mb-3">
-                    <label for="contactEmail">Contact Email:</label>
-                    <input type="email" id="contactEmail" name="contactEmail" th:field="*{contactEmail}" required />
-                </div>
+            <label for="contactUrl">Contact URL:</label>
+            <input type="url" id="contactUrl" name="contactUrl" placeholder="https://example.com">
 
-                <div class="mb-3">
-                    <label for="contactPhone">Contact Phone:</label>
-                    <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="contactPhone" name="contactPhone" th:field="*{contactPhone}" required />
-                </div>
+            <label for="description">Description (optional):</label>
+            <textarea id="description" name="description" placeholder="Describe the partner"></textarea>
 
-                <div class="mb-3">
-                    <label for="contactUrl">Contact URL:</label>
-                    <input type="url" placeholder="https://example.com" id="contactUrl" name="contactUrl" th:field="*{contactUrl}" />
-                </div>
+            <div class="terms">
+                <strong>Terms and Conditions:</strong>
+                Welcome to Partners Repository! By accessing and using our website, you agree to the following terms and conditions:
 
-                <div class="mb-3">
-                    <label for="description">Description (optional):</label>
-                    <textarea id="description" name="description" th:field="*{description}"></textarea>
-                </div>
+Acceptance of Terms: By using our services, you agree to be bound by these terms. If you do not agree with any part of the terms, you may not use our services.
 
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="invalidCheck" required="">
-                        <label class="form-check-label" for="invalidCheck">
-                            Agree to terms and conditions
-                        </label>
-                        <div class="invalid-feedback">
-                            You must agree before submitting.
-                        </div>
-                    </div>
-                </div>
+Changes to Terms: We reserve the right to modify these terms at any time. Your continued use of our services after such changes have been notified will constitute your consent to such changes.
 
-                <button type="submit" class="btn">Add Partner</button>
-                <button type="button" class="btn" onclick="window.location.href='/'">Home Page</button>
-            </form>
-        </div>
+Use of the Platform: You agree to use the platform only for lawful purposes and in a way that does not infringe the rights of, restrict, or inhibit anyone else's use and enjoyment of the website. Prohibited behavior includes harassing or causing distress or inconvenience to any other user, transmitting obscene or offensive content, or disrupting the normal flow of dialogue within our website.
+
+Your Account: If you create an account at Partners Repository, you are responsible for maintaining the security of your account, and you are fully responsible for all activities that occur under the account and any other actions taken in connection with it.
+
+Privacy Policy: Your privacy is important to us. Our Privacy Policy, which is part of these terms, describes how we handle the information you provide to us when you use our services.
+
+Termination: We may terminate or suspend access to our services immediately, without prior notice or liability, for any reason whatsoever, including, without limitation, if you breach the Terms.
+
+Governing Law: These terms shall be governed and construed in accordance with the laws of our country, without regard to its conflict of law provisions.
+
+Your use of Partners Repository is conditioned on your acceptance of and compliance with these terms. These terms apply to all visitors, users, and others who access or use the service.
+            </div>
+
+            <label class="checkbox">
+                <input type="checkbox" required> Agree to terms and conditions
+            </label>
+
+            <input type="submit" class="button" value="Add Partner">
+            <input type="button" class="button" value="Home Page" onclick="window.location.href='/'">
+        </form>
     </div>
 </body>
-
 </html>

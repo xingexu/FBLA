@@ -66,59 +66,74 @@
         }
 
         button {
-            background-color: #654ea3; /* A soft purple background */
+            background-color: #ff6f61; /* A soft red background */
             color: white;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effect */
+            transition: background-color 0.3s; /* Smooth transition for hover effect */
         }
 
         button:hover {
-            background-color: #502d77; /* Darker purple for hover */
-            transform: translateY(-2px); /* Slight lift effect on hover */
+            background-color: #ff4757; /* Darkens the button on hover */
         }
 
-        .tag-button {
-            background: linear-gradient(to right, #654ea3, #eaafc8); /* Purple to pink gradient */
-            color: white; /* White text for better contrast */
-            border: none; /* Removes the border */
-            padding: 5px 10px; /* Adds some padding around the text */
-            margin-right: 5px; /* Adds space between buttons */
-            border-radius: 5px; /* Rounds the corners */
-            text-shadow: 0px 1px 1px rgba(0,0,0,0.2); /* Subtle text shadow for readability */
-            cursor: pointer; /* Changes cursor to pointer to indicate button */
-            transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
+        .modal-content {
+            background-color: #f8f9fa; /* Light background for modal content */
+            color: #212529; /* Dark text color for readability */
         }
 
-        .tag-button:hover {
-            background: linear-gradient(to right, #502d77, #c084c6); /* Darker purple gradient for hover */
-            transform: translateY(-2px); /* Slight lift effect on hover */
+        .modal-header, .modal-footer {
+            border: none; /* Remove default borders */
+        }
+
+        .modal-header .btn-close {
+            color: #000; /* Black color for the close button */
+        }
+
+        .btn-outline-secondary {
+            color: #6c757d; /* Default color for outline button */
+            border-color: #6c757d; /* Default border color */
+        }
+
+        .btn-outline-secondary:hover {
+            color: #fff; /* White color on hover */
+            background-color: #6c757d; /* Background color on hover */
+            border-color: #6c757d; /* Border color on hover */
+        }
+
+        .btn-danger {
+            background-color: #dc3545; /* Danger button background color */
+            border-color: #dc3545; /* Danger button border color */
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333; /* Darker danger background on hover */
+            border-color: #bd2130; /* Darker danger border on hover */
+        }
+
+        .form-label {
+            color: #495057; /* Dark label color */
+        }
+
+        .invalid-feedback {
+            color: #dc3545; /* Red color for invalid feedback */
         }
     </style>
 </head>
 <body>
     <div layout:fragment="partners">
-        <!-- Header -->
         <header data-bs-theme="dark">
             <div class="collapse text-bg-dark" id="navbarHeader">
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-md-7 py-4">
-                            <h4>About</h4>
-                            <p class="text-body-secondary">Welcome to the Partner Database! You can search and filter partners </p>
+                            <h4>About the Program</h4>
+                            <p>Welcome to the Partners Repository! This platform enables you to seamlessly manage and view information about our business and community partners. Stay connected and make the most of your partnerships with ease.</p>
                         </div>
                         <div class="col-sm-4 offset-md-1 py-4">
-                            
+                            <h4>Hi, <span th:text="${#authentication.name}">User</span>!</h4>
                             <form th:action="@{/logout}" method="post">
                                 <input type="submit" value="Sign Out" />
                             </form>
-                            <h4>Contact</h4>
-                            <ul class="list-unstyled row">
-                                <div class="col"><li><a href="#" target="_blank" class="text-white"><i class="bi bi-twitter-x"></i></a></li></div>
-                                <div class="col"><li><a href="#" target="_blank" class="text-white"><i class="bi bi-instagram"></i></a></li></div>
-                                <div class="col"><li><a href="#" target="_blank" class="text-white"><i class="bi bi-discord"></i></a></li></div>
-                                <div class="col"><li><a href="mailto:xingexu1107@gmail.com" target="_blank" class="text-white"><i class="bi bi-envelope-at"></i></a></li></div>
-                            </ul>
-
                         </div>
                     </div>
                 </div>
@@ -126,12 +141,10 @@
             <div class="navbar navbar-dark bg-dark shadow-sm">
                 <div class="container">
                     <a href="/" class="navbar-brand d-flex align-items-center">
-                        <i class="bi bi-people-fill pe-1" style="font-size: 2rem; "></i>
-                        <strong>Partners</strong>
+                        <i class="bi bi-house-fill pe-1" style="font-size: 2rem;"></i>
+                        <strong>Go Home</strong>
                     </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false"
-                        aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                 </div>
@@ -141,28 +154,21 @@
         <!-- form actions -->
         <section id="container" class="col-lg-12">
             <form id="search-form" class="row g-1 mt-1" th:action="@{/partners}" th:object="${filter}" method="get">
-
                 <div class="row">
                     <div class="col">
                         <div class="input-group mb-3">
                             <span class="input-group-text"><i class="bi bi-search"></i></span>
-                            <input type="text" class="form-control" id="textSearch" name="keyword"
-                                th:onblur="'autoSubmitForm()'" placeholder="Search partners..." aria-label="search">
+                            <input type="text" class="form-control" id="textSearch" name="keyword" th:onblur="'autoSubmitForm()'" placeholder="Search partners..." aria-label="search">
                         </div>
-
                     </div>
                     <div class="col">
-                        <button type="button" class="btn btn-primary d-flex flex-end justify-content-end"
-                            onclick="window.location.href='/addpartner'">Add New</button>
+                        <button type="button" class="btn btn-primary d-flex flex-end justify-content-end" onclick="window.location.href='/addpartner'">Add New</button>
                     </div>
                 </div>
-
-
                 <div>
                     <label>Tags:</label>
                     <div class="form-check form-check-inline" th:each="tag : ${allTags}" name="'tag-'+ ${tag.name}">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" th:value="${tag.id}"
-                            th:field="*{tagIds}" th:onchange="'autoSubmitForm()'">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" th:value="${tag.id}" th:field="*{tagIds}" th:onchange="'autoSubmitForm()'">
                         <label class="form-check-label" for="inlineCheckbox1" th:text="${tag.name}"></label>
                     </div>
                 </div>
@@ -172,7 +178,6 @@
         <main>
             <div class="album py-5 bg-body-tertiary">
                 <div class="container">
-
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         <div class="col" th:each="partner : ${partners}">
                             <div class="card shadow-sm">
@@ -342,7 +347,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="confirmModalLabel">Confirm Action</h5>
+                        <h5 class="modal-title" id="confirmModalLabel">Delete Partner</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -408,8 +413,5 @@
             });
         </script>
     </div>
-
-
 </body>
-
 </html>
