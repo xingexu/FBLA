@@ -1,136 +1,116 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{layout}">
-
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
+    <meta charset="UTF-8">
     <title>Welcome to CTE Partners Program</title>
-    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: "Open Sans", sans-serif;
-            color: #2f4f4f;
-            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+            color: #ffffff;
+            background: linear-gradient(135deg, #0d324d 0%, #7f5a83 100%); /* Darker gradient */
             padding-top: 20px;
             padding-bottom: 20px;
             margin: 0;
         }
 
-        .welcome-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin: 0 auto;
-            margin-bottom: 20px;
+        .welcome-container, .info-container {
+            background-color: rgba(255, 255, 255, 0.1); /* More transparency */
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Darker shadow for more depth */
+            margin: auto;
             text-align: center;
-            max-width: 90%;
+            max-width: 80%;
+            margin-top: 20px;
         }
 
-        h1 {
-            font-family: "Montserrat", sans-serif;
-            color: #00bfff;
-            margin-bottom: 10px;
+        h1, h2 {
+            font-weight: 700;
+            color: #e43f5a;
+            margin-bottom: 15px;
         }
 
         p {
-            font-size: 1em;
-            margin-bottom: 10px;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
 
         .actions-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             margin: 0 auto;
-            max-width: 90%;
-            margin-bottom: 20px;
+            max-width: 80%;
+            margin-top: 20px;
         }
 
         .outer-box {
-            background-color: white;
-            padding: 10px;
-            border: 1px solid #00bfff;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border: 2px solid #e43f5a;
             border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 5px;
-            /* Adjust margin here */
-            flex-grow: 1;
-            width: calc(50% - 10px);
-            /* Adjust width here */
-        }
-
-        .action-box {
-            border-radius: 4px;
-            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            width: calc(50% - 20px);
+            position: relative;
         }
 
         .image-container {
-            height: 425px;
-            /* Set a fixed height for the image container */
+            height: 200px; /* Fixed height */
             overflow: hidden;
-            /* Hide any overflow */
             border-radius: 4px;
+            margin-bottom: 20px;
         }
 
         .image-container img {
             width: 100%;
-            height: 100%;
-            /* Set the image height to fill its container */
+            height: 100%; /* Ensuring the image covers the container */
             object-fit: cover;
             object-position: center;
-            border-radius: 4px;
         }
 
         button {
-            /* background-color: #00bfff; */
+            background-color: #e43f5a;
             color: white;
-            padding: 10px 15px;
+            padding: 12px 18px;
             border: none;
-            
             border-radius: 4px;
             width: 100%;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
         }
 
         button:hover {
-            opacity: 0.8;
-            cursor: pointer;
+            background-color: #f73859;
+            opacity: 0.9;
         }
     </style>
 </head>
-
 <body>
     <div layout:fragment="home">
         <div class="welcome-container">
             <h1>Welcome to the Career and Technical Education Partners Program</h1>
-            <p>
-                This platform allows you to manage and view information about our
-                business and community partners.
-            </p>
+            <p>This platform allows you to manage and view information about our business and community partners.</p>
         </div>
         <div class="actions-container">
             <div class="outer-box">
-                <div class="action-box">
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='/partners'">
-                        View Partners
-                    </button>
-                </div>
                 <div class="image-container">
                     <img src="/images/viewpartners.png" alt="View Partners Image" />
                 </div>
+                <button type="button" onclick="window.location.href='/partners'">View Partners</button>
             </div>
             <div class="outer-box">
-                <div class="action-box">
-                    <button type="button" class="btn btn-primary" onclick="window.location.href='/addpartner'">
-                        Become A Partner
-                    </button>
-                </div>
                 <div class="image-container">
                     <img src="/images/addpartner.png" alt="Add New Partner Image" />
                 </div>
+                <button type="button" onclick="window.location.href='/addpartner'">Become A Partner</button>
             </div>
+        </div>
+        <div class="info-container">
+            <h2>Getting Started</h2>
+            <p>Our website offers a streamlined process to manage your partnerships. Easily add new partners through the 'Become A Partner' button or view and edit existing partners by navigating to 'View Partners'. This dynamic platform ensures all your partner interactions are hassle-free and efficient.</p>
         </div>
     </div>
 </body>
-
 </html>
