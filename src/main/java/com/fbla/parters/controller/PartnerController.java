@@ -1,11 +1,6 @@
 package com.fbla.parters.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,6 +22,7 @@ import com.fbla.parters.model.FilterDTO;
 import com.fbla.parters.model.Partner;
 import com.fbla.parters.model.Tag;
 import com.fbla.parters.service.PartnerService;
+import com.fbla.parters.service.icon.IconService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,6 +32,9 @@ public class PartnerController {
 
     @Autowired
     private PartnerService partnerService;
+
+    @Autowired
+    private IconService iconService;
 
     private static final String PARTNERS_ATTRIBUTE = "partners";
     private static final String TAGS_ATTRIBUTE = "allTags";
@@ -86,25 +85,17 @@ public class PartnerController {
     }
 
     @PostMapping("/savepartner")
-    public String savePartner(@ModelAttribute Partner partner, @RequestParam("partnerImage") MultipartFile file, RedirectAttributes redirectAttributes) {
+    public String savePartner(@ModelAttribute Partner partner, @RequestParam("partnerImage") MultipartFile file,
+            RedirectAttributes redirectAttributes) {
         if (!file.isEmpty()) {
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-            String uploadDir = "path/to/upload/directory"; // Update with your upload directory path
 
+            String iconUrl;
             try {
-                Path uploadPath = Paths.get(uploadDir);
-
-                if (!Files.exists(uploadPath)) {
-                    Files.createDirectories(uploadPath);
-                }
-
-                try (InputStream inputStream = file.getInputStream()) {
-                    Path filePath = uploadPath.resolve(fileName);
-                    Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-                    partner.setLogoPath(fileName);
-                }
+                iconUrl = iconService.uploadIcon(file);
+                partner.setLogoPath(iconUrl);
             } catch (IOException e) {
-                e.printStackTrace();
+                partner.setLogoPath(fileName);
             }
         }
 
@@ -112,6 +103,4 @@ public class PartnerController {
         redirectAttributes.addFlashAttribute("message", "Partner saved successfully!");
         return "redirect:/partners";
     }
-
-    // Additional methods to handle search and filter requests
 }
