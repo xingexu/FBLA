@@ -10,4 +10,9 @@ public class HomeController {
     public String home() {
         return "home"; // the name of the template file without the .html extension
     }
+    
+    @GetMapping("/faq")
+    public String faq() {
+        return "FAQ";
+    }
 }

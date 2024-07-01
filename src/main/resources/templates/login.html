@@ -9,64 +9,118 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #0d324d 0%, #7f5a83 100%);
             color: #fff;
-            text-align: center;
-            padding: 40px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        .login-container {
-            width: 400px; /* Increased width */
-            margin: auto;
-            background-color: rgba(255, 255, 255, 0.1);
-            padding: 40px; /* Increased padding */
-            border-radius: 10px; /* Smoothed border radius */
+        .overlay {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
         }
         h1 {
-            font-size: 28px; /* Larger heading */
+            font-size: 28px;
             font-weight: 700;
             margin-bottom: 30px;
         }
         .form-group {
-            margin-bottom: 20px; /* More spacing */
+            margin-bottom: 20px;
         }
         .form-group input {
-            width: calc(100% - 40px); /* Adjust width to account for padding */
-            padding: 15px 20px; /* Larger padding for better usability */
+            width: calc(100% - 40px);
+            padding: 15px 20px;
             border: none;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.2);
-            color: #fff; /* Text color is white for visibility */
-            font-size: 18px; /* Larger font size */
+            color: #fff;
+            font-size: 18px;
         }
-        .form-group input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: #fff; /* White placeholder text */
-            opacity: 1; /* Non-transparent placeholder text */
+        .form-group input::placeholder {
+            color: #fff;
+            opacity: 1;
         }
         .form-group input[type="submit"] {
             font-weight: 600;
-            background-color: #ec008c; /* Vibrant pink */
+            background-color: #ec008c;
             border: none;
             cursor: pointer;
             padding: 15px 20px;
+            width: 100%;
         }
         .form-group input[type="submit"]:hover {
-            background-color: #ff3366; /* Lighter pink */
+            background-color: #ff3366;
         }
         .error-message {
-            color: #ff3366; /* Light pink for errors */
-            font-size: 16px; /* Larger font size for visibility */
+            color: #ff3366;
+            font-size: 16px;
         }
         .checkbox-group {
             text-align: left;
-            margin-bottom: 15px; /* Adjusted margin */
+            margin-bottom: 15px;
         }
         .checkbox-group label {
             font-weight: 400;
-            font-size: 16px; /* Larger label text */
-            color: #fff; /* Label text is white */
+            font-size: 16px;
+            color: #fff;
         }
         .checkbox-group input[type="checkbox"] {
             margin-right: 5px;
             vertical-align: middle;
+        }
+        .forgot-password {
+            margin-top: 10px;
+        }
+        .forgot-password a {
+            color: #ec008c;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+        .create-account {
+            margin-top: 20px;
+        }
+        .create-account a {
+            color: #ec008c;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .create-account a:hover {
+            text-decoration: underline;
+        }
+        .social-login {
+            margin-top: 20px;
+        }
+        .social-login button {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 15px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .social-login button.google {
+            background-color: #dd4b39;
+            color: white;
+        }
+        .social-login button.google:hover {
+            background-color: #c23321;
+        }
+        .social-login button.facebook {
+            background-color: #3b5998;
+            color: white;
+        }
+        .social-login button.facebook:hover {
+            background-color: #2d4373;
         }
     </style>
     <script>
@@ -83,8 +137,8 @@
     </script>
 </head>
 <body>
-    <div class="login-container">
-        <h1> Log In</h1>
+    <div class="overlay">
+        <h1>Log In</h1>
         <div th:if="${param.error}" class="error-message">
             Invalid username and password.
         </div>
@@ -114,6 +168,16 @@
                 <input type="submit" value="Log in" />
             </div>
         </form>
+        <div class="forgot-password">
+            <a th:href="@{/forgot-password}">Forgot your password?</a>
+        </div>
+        <div class="create-account">
+            <a th:href="@{/register}">Create an Account</a>
+        </div>
+        <div class="social-login">
+            <button class="google" onclick="window.location.href='/login/google'">Log in with Google</button>
+            <button class="facebook" onclick="window.location.href='/login/facebook'">Log in with Facebook</button>
+        </div>
     </div>
 </body>
 </html>

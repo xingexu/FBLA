@@ -9,27 +9,27 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #654ea3, #eaafc8); /* Purple to pink gradient */
-            color: white; /* Ensures text is readable on the dark background */
+            background: linear-gradient(135deg, #654ea3, #eaafc8);
+            color: white;
         }
 
         header {
-            background: linear-gradient(to right, #8A2387, #E94057, #F27121); /* Deep purple to red to orange gradient */
+            background: linear-gradient(to right, #8A2387, #E94057, #F27121);
             padding: 20px;
-            text-align: center; /* Centers the content in the header */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adds depth with a shadow */
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .navbar {
             display: flex;
-            justify-content: space-between; /* Distributes space between and around content items */
-            align-items: center; /* Vertically centers the items in the container */
+            justify-content: space-between;
+            align-items: center;
         }
 
         .navbar-brand {
             color: white;
-            text-decoration: none; /* No underlines on the text */
-            font-size: 24px; /* Increases the font size */
+            text-decoration: none;
+            font-size: 24px;
         }
 
         .navbar-toggler {
@@ -43,79 +43,79 @@
             display: block;
             width: 30px;
             height: 30px;
-            background-size: contain; /* Makes sure the entire icon is visible */
+            background-size: contain;
             background-image: url('data:image/svg+xml;charset=UTF-8,<svg viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg"><path stroke="rgba(255, 255, 255, 0.5)" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"/></svg>');
         }
 
         .search-container {
-            padding: 15px; /* Adds space around the search bar */
-            background: rgba(255, 255, 255, 0.1); /* Slight white transparency */
-            border-radius: 5px; /* Rounds the corners of the search container */
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
             margin-top: 20px;
         }
 
         input[type="search"], button {
             border: 1px solid #ccc;
             padding: 10px;
-            margin-right: 10px; /* Adds space to the right of the elements */
+            margin-right: 10px;
             border-radius: 5px;
         }
 
         input[type="search"] {
-            flex-grow: 1; /* Allows the search input to grow */
+            flex-grow: 1;
         }
 
         button {
-            background-color: #ff6f61; /* A soft red background */
+            background-color: #ff6f61;
             color: white;
             cursor: pointer;
-            transition: background-color 0.3s; /* Smooth transition for hover effect */
+            transition: background-color 0.3s;
         }
 
         button:hover {
-            background-color: #ff4757; /* Darkens the button on hover */
+            background-color: #ff4757;
         }
 
         .modal-content {
-            background-color: #f8f9fa; /* Light background for modal content */
-            color: #212529; /* Dark text color for readability */
+            background-color: #f8f9fa;
+            color: #212529;
         }
 
         .modal-header, .modal-footer {
-            border: none; /* Remove default borders */
+            border: none;
         }
 
         .modal-header .btn-close {
-            color: #000; /* Black color for the close button */
+            color: #000;
         }
 
         .btn-outline-secondary {
-            color: #6c757d; /* Default color for outline button */
-            border-color: #6c757d; /* Default border color */
+            color: #6c757d;
+            border-color: #6c757d;
         }
 
         .btn-outline-secondary:hover {
-            color: #fff; /* White color on hover */
-            background-color: #6c757d; /* Background color on hover */
-            border-color: #6c757d; /* Border color on hover */
+            color: #fff;
+            background-color: #6c757d;
+            border-color: #6c757d;
         }
 
         .btn-danger {
-            background-color: #dc3545; /* Danger button background color */
-            border-color: #dc3545; /* Danger button border color */
+            background-color: #dc3545;
+            border-color: #dc3545;
         }
 
         .btn-danger:hover {
-            background-color: #c82333; /* Darker danger background on hover */
-            border-color: #bd2130; /* Darker danger border on hover */
+            background-color: #c82333;
+            border-color: #bd2130;
         }
 
         .form-label {
-            color: #495057; /* Dark label color */
+            color: #495057;
         }
 
         .invalid-feedback {
-            color: #dc3545; /* Red color for invalid feedback */
+            color: #dc3545;
         }
     </style>
 </head>
@@ -257,7 +257,7 @@
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModal" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="/savepartner" method="post" class="needs-validation was-validated">
+                    <form action="/savepartner" method="post" class="needs-validation was-validated" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="addPartnerLabel">Edit Partner</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -320,6 +320,11 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="partnerImage" class="form-label">Choose an image/icon for your partnership (optional):</label>
+                                <input type="file" class="form-control" id="partnerImage" name="partnerImage" accept="image/*">
+                            </div>
+
+                            <div class="mb-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="invalidCheck"
                                         required="">
@@ -378,7 +383,6 @@
                     var partnerId = button.getAttribute('data-partner-id');
                     var partnerName = button.getAttribute('data-partner-name');
 
-                    // Update modal's content.
                     var modalTitle = confirmModal.querySelector('.modal-title');
                     modalTitle.textContent = 'Delete Partner: ' + partnerName;
 

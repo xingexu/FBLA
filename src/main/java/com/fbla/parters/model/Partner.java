@@ -27,24 +27,24 @@ public class Partner {
 
     @NotEmpty(message = "Organization Name cannot be empty.")
     @Size(min = 2, max = 255)
-    private String organizationName; // name of partner
+    private String organizationName; // Name of the partner organization
 
-    @NotEmpty(message = "type cannot be empty.")
+    @NotEmpty(message = "Type cannot be empty.")
     @Size(min = 1, max = 255)
-    private String type; // e.g., NGO, Corporation, etc.
+    private String type; // Type of organization, e.g., NGO, Corporation, etc.
 
-    @NotEmpty(message = "contactEmail cannot be empty.")
+    @NotEmpty(message = "Contact Email cannot be empty.")
     @Size(min = 1, max = 255)
     @Pattern(regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$$", message = "Please provide a valid email address")
-    private String contactEmail; // contact
+    private String contactEmail; // Contact email address
     
-    @NotEmpty(message = "contactPhone cannot be empty.")
+    @NotEmpty(message = "Contact Phone cannot be empty.")
     @Pattern(regexp = "^\\(?(\\d{3})\\)?[-.\\s]?(\\d{3})[-.\\s]?(\\d{4})$", message = "Please provide a valid phone number")
-    private String contactPhone;
+    private String contactPhone; // Contact phone number
     
-    private String contactUrl;
-    private String logoPath;
-    private String description;
+    private String contactUrl; // Contact URL
+    private String logoPath; // Path to the logo image
+    private String description; // Description of the partner
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
@@ -52,9 +52,8 @@ public class Partner {
         joinColumns = @JoinColumn(name = "partner_id"),
         inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private Set<Tag> tags = new HashSet<>();
+    private Set<Tag> tags = new HashSet<>(); // Set of associated tags
 
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt; // Timestamp of creation
+    private LocalDateTime updatedAt; // Timestamp of last update
 }
